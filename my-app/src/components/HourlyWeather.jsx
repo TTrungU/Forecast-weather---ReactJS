@@ -1,15 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useGlobalContext } from '../Context';
-export default function HourlyWeather({ newTime, icon, tempC, index, nextHours }) {
-    // console.log(nextHours)
+export default function HourlyWeather({ newTime, icon, tempC }) {
+
     const { transX } = useGlobalContext();
     const container = useRef(null)
 
     useEffect(() => {
         const transForm = container.current
         transForm.style.transform = `translateX(${transX}%)`
-        // console.log(transForm.style.transform)
-        // console.log(transX)
+
     }, [transX])
     return (
         <div className={`forecast-timeline `} ref={container} >

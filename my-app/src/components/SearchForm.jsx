@@ -19,8 +19,7 @@ export default function SearchForm() {
                         name='name'
                         id='name'
                         placeholder="Ha noi"
-                    // value=""
-                    // onChange={(e) => setSearchTerm(e.target.value)}
+
 
                     />
                     <button type="submit" className="btn">Find</button>

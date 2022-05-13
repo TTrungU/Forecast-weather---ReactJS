@@ -5,7 +5,7 @@ import HourlyWeather from "./HourlyWeather"
 import DailyWeather from "./DailyWeather";
 import Loading from "./Loading"
 
-// import { Carousel } from '@trendyol-js/react-carousel';
+
 export default function Forecast() {
     const { location, dailyForecast, currentForecast, hourlyForecast, transX, setTransX, loading } = useGlobalContext()
 
@@ -27,10 +27,10 @@ export default function Forecast() {
     const { city, country, date, time } = location
     const { tempC, text, icon } = currentForecast
 
-    // const newTransx = 0
+
     const nextHours = () => {
         setTransX(transX - 170)
-        console.log(transX)
+
     }
     const preHours = () => {
         setTransX(transX + 170)
@@ -74,7 +74,7 @@ export default function Forecast() {
             </article>
             <div className="underline"></div>
             <article className="forecast-container">
-                {/* <DailyWeather /> */}
+
                 {dailyForecast.map((item, index) => {
 
                     return <DailyWeather key={index} {...item} />

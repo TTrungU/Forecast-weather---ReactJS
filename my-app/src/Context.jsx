@@ -15,30 +15,17 @@ const AppProvider = ({ children }) => {
     const [transX, setTransX] = useState(0)
 
 
-    // const trans = 0
 
-    // const upTrans = (trans_X) => {
-    //     trans_X -= 100;
-    //     setTransX(trans_X)
-    //     // setTransX(trans)
-    //     console.log(trans)
-    // }
     const getHourly = (currentTime, hourListToday, hourListTomorow, index) => {
-        // console.log(currentTime)
+
         let dateFormated = new Date(currentTime)
         let currentHour = dateFormated.getHours()
-        // console.log(currentHour)
-
-        // console.log(hourListToday.slice(currentHour - 1, 24), hourListTomorow)
 
         let newHourList = hourListToday.slice(currentHour, 24)
-
         for (let i = 0; i < currentHour; i++) {
             newHourList.push(hourListTomorow[i])
         }
-        // console.log(newHourList)
         return newHourList
-
     }
     const fetchForecast = useCallback(async () => {
         setLoading(true);
@@ -51,14 +38,13 @@ const AppProvider = ({ children }) => {
                 }
             })
             const data = await response.json()
-            // console.log(data.location.localtime, "data")
+
             if (data.location) {
                 let { country: country, localtime: localtime, name: city } = data.location
                 // console.log(country, localtime, city)
                 let time = localtime.substring(0, 10)
                 let date = localtime.substring(11, 16)
                 setLocation({ country, time, date, city })
-                // console.log({ country, time, date, city })
 
             } else {
                 setLocation(null)
@@ -66,7 +52,6 @@ const AppProvider = ({ children }) => {
             if (data.current) {
                 let { temp_c: tempC, condition } = data.current
                 let { text: text, icon: icon } = condition
-                // console.log(tempC, text, icon)
                 tempC = Math.round(tempC)
                 setCurrentForecast({ tempC, text, icon })
             } else {
@@ -75,7 +60,6 @@ const AppProvider = ({ children }) => {
             if (data.forecast) {
                 let { hour: hourListToday } = data.forecast.forecastday[0]
                 let { hour: hourListTomorrow } = data.forecast.forecastday[1]
-
                 let { localtime: currentTime } = data.location
                 let HourlyList = getHourly(currentTime, hourListToday, hourListTomorrow)
                 setHourlyForecast(HourlyList.map((item, index) => {
@@ -85,15 +69,12 @@ const AppProvider = ({ children }) => {
                     tempC = Math.round(tempC)
                     return { tempC, icon, newTime, index }
                 }))
-                // console.log(data.forecast.forecastday)
                 setDailyForecast(data.forecast.forecastday.map((item) => {
                     let { date, day } = item
                     let { maxtemp_c, mintemp_c, condition } = day
                     let { text, icon } = condition
-                    // date = date.substring(5, 10)
                     mintemp_c = Math.round(mintemp_c)
                     maxtemp_c = Math.round(maxtemp_c)
-                    // console.log({ date, maxtemp_c, mintemp_c, text, icon })
                     return ({ date, maxtemp_c, mintemp_c, text, icon })
                 }))
             }
@@ -106,7 +87,7 @@ const AppProvider = ({ children }) => {
     useEffect(() => {
 
         fetchForecast();
-        // console.log("check")
+
     }, [searchTerm, fetchForecast])
     return <AppContext.Provider value={{
         dailyForecast,
